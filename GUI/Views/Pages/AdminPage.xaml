@@ -1,0 +1,78 @@
+<Page x:Class="FitTrack.UI.Views.Pages.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:FitTrack.UI.ViewModels"
+      Title="Admin Dashboard">
+    <Page.DataContext>
+        <vm:AdminViewModel/>
+    </Page.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32">
+            <TextBlock Text="System Administration" Style="{StaticResource PageTitle}" Margin="0,0,0,24"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="0" Margin="0,0,24,0" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="All Users" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        <DataGrid ItemsSource="{Binding AllUsers}" SelectedItem="{Binding SelectedUser}" 
+                                  AutoGenerateColumns="False" IsReadOnly="True" 
+                                  Background="Transparent" BorderThickness="0" RowBackground="Transparent" 
+                                  AlternatingRowBackground="{StaticResource AppBgBrush}" GridLinesVisibility="None"
+                                  HeadersVisibility="Column" Foreground="{StaticResource TextPrimaryBrush}">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextSecBrush}"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource DMSans}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                </Style>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding PersonId}" Width="Auto"/>
+                                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding FullName}" Width="*"/>
+                                <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="Auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="1" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="User Actions" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        
+                        <TextBlock Text="Select a user to manage." Style="{StaticResource BodyText}" Foreground="{StaticResource TextSecBrush}"
+                                   Visibility="{Binding SelectedUser, Converter={StaticResource InverseBoolToVisConverter}}"/>
+                                   
+                        <StackPanel Visibility="{Binding SelectedUser, Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="{Binding UserDetailsText}" Style="{StaticResource BodyText}" Margin="0,0,0,24" TextWrapping="Wrap"/>
+                            <Button Content="Delete User" Command="{Binding DeleteUserCommand}" HorizontalAlignment="Left" Padding="16,8" Background="Transparent" Foreground="{StaticResource RedBrush}" BorderBrush="{StaticResource RedBrush}" BorderThickness="1" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="4">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource RedBrush}" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

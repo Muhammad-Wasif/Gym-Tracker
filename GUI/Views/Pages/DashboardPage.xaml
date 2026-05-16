@@ -1,0 +1,91 @@
+<Page x:Class="FitTrack.UI.Views.Pages.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ctrl="clr-namespace:FitTrack.UI.Controls"
+      xmlns:vm="clr-namespace:FitTrack.UI.ViewModels"
+      Title="Dashboard">
+    <Page.DataContext>
+        <vm:DashboardViewModel/>
+    </Page.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32,24" x:Name="Container">
+            <!-- Row 1: Greeting -->
+            <Grid x:Name="HeaderRow" Margin="0,0,0,32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="{Binding GreetingPrefix}" Style="{StaticResource BodyText}" Foreground="{StaticResource TextSecBrush}"/>
+                    <TextBlock Text="{Binding FirstName}" FontSize="36" FontWeight="Bold" FontFamily="{StaticResource DMSans}" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,4,0,8"/>
+                    <ctrl:GoalBadge GoalName="{Binding GoalName}" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <TextBlock Text="{Binding TodayDateString}" Style="{StaticResource MonoSmall}" Grid.Column="1" VerticalAlignment="Top"/>
+            </Grid>
+
+            <!-- Row 2: Stats -->
+            <UniformGrid Columns="4" x:Name="StatsRow" Margin="0,0,0,32">
+                <ctrl:StatCard Label="BMI" IconGlyph="Child" AccentColor="{StaticResource CyanBrush}"
+                               Value="{Binding BMI, StringFormat={}{0:0.0}}" Subtitle="{Binding BMICategory}" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Today Calories" IconGlyph="Fire" AccentColor="{StaticResource AmberBrush}"
+                               Value="{Binding TodayCalories}" Subtitle="kcal consumed" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Current Weight" IconGlyph="BalanceScale" AccentColor="{StaticResource GreenBrush}"
+                               Value="{Binding CurrentWeight, StringFormat={}{0:0.0} kg}" Subtitle="Recently" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Week Sessions" IconGlyph="Calendar" AccentColor="{StaticResource BrandBrush}"
+                               Value="{Binding WeekSessionCount}" Subtitle="workouts this week" Margin="0,0,0,0"/>
+            </UniformGrid>
+
+            <!-- Row 3 -->
+            <Grid Margin="0,0,0,32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="0" Margin="0,0,16,0" x:Name="NutritionCard">
+                    <StackPanel>
+                        <TextBlock Text="Today's Nutrition" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        <ctrl:MacroBar Label="Protein" ActualGrams="{Binding ProteinActual}" TargetGrams="{Binding ProteinTarget}" BarColor="{StaticResource ProteinBrush}"/>
+                        <ctrl:MacroBar Label="Carbs" ActualGrams="{Binding CarbsActual}" TargetGrams="{Binding CarbsTarget}" BarColor="{StaticResource CarbsBrush}"/>
+                        <ctrl:MacroBar Label="Fat" ActualGrams="{Binding FatActual}" TargetGrams="{Binding FatTarget}" BarColor="{StaticResource FatBrush}"/>
+                        
+                        <Rectangle Height="1" Fill="{StaticResource BorderBrush}" Margin="0,16"/>
+                        <ItemsControl ItemsSource="{Binding TodayMeals}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <Ellipse Width="8" Height="8" Fill="{StaticResource BrandBrush}" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding FoodName}" Style="{StaticResource BodyText}" Width="150"/>
+                                        <TextBlock Text="{Binding Calories, StringFormat={}{0:0} kcal}" Style="{StaticResource MonoSmall}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button Style="{StaticResource PrimaryButton}" Content="+ Log Meal" Command="{Binding LogMealCommand}" Margin="0,16,0,0" Padding="12,8" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="1" x:Name="WorkoutCard">
+                    <StackPanel>
+                        <TextBlock Text="Today's Workout" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        <TextBlock Text="{Binding ActivePlan.PlanName}" FontSize="16" FontWeight="SemiBold" FontFamily="{StaticResource DMSans}" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                        
+                        <ItemsControl ItemsSource="{Binding TodayExercises}" Margin="0,16,0,16">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <TextBlock Text="{Binding ExerciseName}" Style="{StaticResource BodyText}" Width="150"/>
+                                        <TextBlock Text="{Binding Sets}" Style="{StaticResource MonoSmall}" Margin="0,0,4,0"/>
+                                        <TextBlock Text="x" Style="{StaticResource MonoSmall}"/>
+                                        <TextBlock Text="{Binding Reps}" Style="{StaticResource MonoSmall}" Margin="4,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button Style="{StaticResource PrimaryButton}" Content="Log Workout" Command="{Binding LogWorkoutCommand}" Padding="12,8" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

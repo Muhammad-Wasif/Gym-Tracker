@@ -1,0 +1,61 @@
+<Page x:Class="FitTrack.UI.Views.Pages.ProgressPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:FitTrack.UI.ViewModels"
+      xmlns:ctrl="clr-namespace:FitTrack.UI.Controls"
+      Title="Progress">
+    <Page.DataContext>
+        <vm:ProgressViewModel/>
+    </Page.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32">
+            <Grid Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Progress Tracking" Style="{StaticResource PageTitle}"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="+ Log Progress" Command="{Binding LogProgressCommand}" Grid.Column="1" Padding="16,8"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="0" Margin="0,0,24,0" Height="400" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="Weight Chart" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        <ctrl:LineChart DataPoints="{Binding WeightDataPoints}" LineColor="{StaticResource BrandBrush}" Height="300"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="1" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="Snapshot History" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        
+                        <ItemsControl ItemsSource="{Binding Snapshots}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="0,12">
+                                        <Grid>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding SnapshotDate, StringFormat='{}{0:MMM dd, yyyy}'}" Style="{StaticResource BodyText}" FontWeight="SemiBold"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <TextBlock Text="{Binding WeightKg, StringFormat=Weight: {0:0.0} kg}" Style="{StaticResource Caption}"/>
+                                                    <TextBlock Text=" • " Style="{StaticResource Caption}" Visibility="{Binding BodyFatPct, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                                    <TextBlock Text="{Binding BodyFatPct, StringFormat=Fat: {0:0.0}%}" Style="{StaticResource Caption}" Visibility="{Binding BodyFatPct, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

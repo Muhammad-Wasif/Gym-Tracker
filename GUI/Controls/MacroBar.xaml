@@ -1,0 +1,20 @@
+<UserControl x:Class="FitTrack.UI.Controls.MacroBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Loaded="UserControl_Loaded" SizeChanged="UserControl_SizeChanged">
+    <StackPanel>
+        <Grid Margin="0,0,0,4">
+            <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       Style="{StaticResource MonoSmall}" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding ActualGrams, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0:0}g}" Style="{StaticResource MonoSmall}" Foreground="{StaticResource TextPrimaryBrush}"/>
+                <TextBlock Text=" / " Style="{StaticResource MonoSmall}"/>
+                <TextBlock Text="{Binding TargetGrams, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0:0}g}" Style="{StaticResource MonoSmall}"/>
+            </StackPanel>
+        </Grid>
+        <Border x:Name="BgBorder" CornerRadius="3" Height="6" Background="{StaticResource BorderBrush}">
+            <Border x:Name="FillBorder" CornerRadius="3" Height="6" HorizontalAlignment="Left" Width="0"
+                    Background="{Binding BarColor, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </Border>
+    </StackPanel>
+</UserControl>

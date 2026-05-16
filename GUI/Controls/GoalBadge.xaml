@@ -1,0 +1,19 @@
+<UserControl x:Class="FitTrack.UI.Controls.GoalBadge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:FitTrack.UI.Converters"
+             x:Name="root">
+    <UserControl.Resources>
+        <converters:GoalToColorConverter x:Key="GoalToColorConverter"/>
+        <converters:GoalToLightColorConverter x:Key="GoalToLightColorConverter"/>
+    </UserControl.Resources>
+    
+    <Border CornerRadius="100" Padding="10,4" BorderThickness="1"
+            Background="{Binding GoalName, ElementName=root, Converter={StaticResource GoalToLightColorConverter}}"
+            BorderBrush="{Binding GoalName, ElementName=root, Converter={StaticResource GoalToColorConverter}}">
+        <TextBlock Text="{Binding GoalName, ElementName=root}" 
+                   Foreground="{Binding GoalName, ElementName=root, Converter={StaticResource GoalToColorConverter}}"
+                   FontSize="11" FontWeight="SemiBold" FontFamily="{StaticResource DMSans}" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </Border>
+</UserControl>

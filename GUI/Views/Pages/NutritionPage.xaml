@@ -1,0 +1,67 @@
+<Page x:Class="FitTrack.UI.Views.Pages.NutritionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:FitTrack.UI.ViewModels"
+      xmlns:ctrl="clr-namespace:FitTrack.UI.Controls"
+      Title="Nutrition">
+    <Page.DataContext>
+        <vm:NutritionViewModel/>
+    </Page.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32">
+            <Grid Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Nutrition Log" Style="{StaticResource PageTitle}"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="+ Log Meal" Command="{Binding LogMealCommand}" Grid.Column="1" Padding="16,8"/>
+            </Grid>
+
+            <UniformGrid Columns="4" Margin="0,0,0,32">
+                <ctrl:StatCard Label="Calories" IconGlyph="Fire" AccentColor="{StaticResource AmberBrush}"
+                               Value="{Binding CaloriesActual}" Subtitle="{Binding CaloriesTarget, StringFormat=Target: {0:0} kcal}" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Protein" IconGlyph="Cutlery" AccentColor="{StaticResource ProteinBrush}"
+                               Value="{Binding ProteinActual, StringFormat={}{0:0.0} g}" Subtitle="{Binding ProteinTarget, StringFormat=Target: {0:0} g}" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Carbs" IconGlyph="Leaf" AccentColor="{StaticResource CarbsBrush}"
+                               Value="{Binding CarbsActual, StringFormat={}{0:0.0} g}" Subtitle="{Binding CarbsTarget, StringFormat=Target: {0:0} g}" Margin="0,0,16,0"/>
+                <ctrl:StatCard Label="Fat" IconGlyph="Tint" AccentColor="{StaticResource FatBrush}"
+                               Value="{Binding FatActual, StringFormat={}{0:0.0} g}" Subtitle="{Binding FatTarget, StringFormat=Target: {0:0} g}" Margin="0,0,0,0"/>
+            </UniformGrid>
+
+            <Border Style="{StaticResource DataCard}">
+                <StackPanel>
+                    <TextBlock Text="Today's Meals" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                    <DataGrid ItemsSource="{Binding DailyLogs}" AutoGenerateColumns="False" IsReadOnly="True" 
+                              Background="Transparent" BorderThickness="0" RowBackground="Transparent" 
+                              AlternatingRowBackground="{StaticResource AppBgBrush}" GridLinesVisibility="None"
+                              HeadersVisibility="Column" Foreground="{StaticResource TextPrimaryBrush}">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextSecBrush}"/>
+                                <Setter Property="FontFamily" Value="{StaticResource DMSans}"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Padding" Value="8"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                            </Style>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Padding" Value="8"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Food" Binding="{Binding FoodName}" Width="2*"/>
+                            <DataGridTextColumn Header="Calories" Binding="{Binding Calories, StringFormat={}{0:0} kcal}" Width="*"/>
+                            <DataGridTextColumn Header="Protein" Binding="{Binding ProteinG, StringFormat={}{0:0} g}" Width="*"/>
+                            <DataGridTextColumn Header="Carbs" Binding="{Binding CarbsG, StringFormat={}{0:0} g}" Width="*"/>
+                            <DataGridTextColumn Header="Fat" Binding="{Binding FatG, StringFormat={}{0:0} g}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

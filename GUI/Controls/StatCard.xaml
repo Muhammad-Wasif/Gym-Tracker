@@ -1,0 +1,39 @@
+<UserControl x:Class="FitTrack.UI.Controls.StatCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             Loaded="UserControl_Loaded">
+    <Border Style="{StaticResource DataCard}" ClipToBounds="True" x:Name="CardBorder">
+        <Grid>
+            <!-- Border for top accent -->
+            <Border Height="3" Background="{Binding AccentColor, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Top" Margin="-24,-24,-24,0"/>
+            <Grid Margin="0,4,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                           Style="{StaticResource Caption}" Foreground="{StaticResource TextSecBrush}" 
+                           Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                
+                <fa:ImageAwesome x:Name="IconImage"
+                                 Foreground="{Binding AccentColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                 Height="20" Width="20" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1"/>
+                
+                <TextBlock x:Name="ValueText" 
+                           Style="{StaticResource DisplayNumber}" 
+                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,8"/>
+                
+                <TextBlock Text="{Binding Subtitle, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                           Style="{StaticResource Caption}" Foreground="{StaticResource TextSecBrush}" 
+                           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

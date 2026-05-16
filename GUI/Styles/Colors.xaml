@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Backgrounds — deep navy/slate layers -->
+  <SolidColorBrush x:Key="AppBgBrush"        Color="#070B14"/>
+  <SolidColorBrush x:Key="SurfaceBrush"      Color="#0D1220"/>
+  <SolidColorBrush x:Key="CardBrush"         Color="#111827"/>
+  <SolidColorBrush x:Key="CardHoverBrush"    Color="#172033"/>
+  <SolidColorBrush x:Key="InputBrush"        Color="#0A0F1C"/>
+  <SolidColorBrush x:Key="OverlayBrush"      Color="#CC070B14"/> <!-- ARGB for #070B14CC -->
+
+  <!-- Brand — electric blue, not powder blue -->
+  <SolidColorBrush x:Key="BrandBrush"        Color="#2563EB"/>
+  <SolidColorBrush x:Key="BrandDarkBrush"    Color="#1D4ED8"/>
+  <SolidColorBrush x:Key="BrandGlowBrush"    Color="#332563EB"/> <!-- ARGB for #2563EB33 -->
+
+  <!-- Accents — used sparingly, one per data type -->
+  <SolidColorBrush x:Key="CyanBrush"         Color="#06B6D4"/>
+  <SolidColorBrush x:Key="GreenBrush"        Color="#10B981"/>
+  <SolidColorBrush x:Key="AmberBrush"        Color="#F59E0B"/>
+  <SolidColorBrush x:Key="RedBrush"          Color="#EF4444"/>
+  <SolidColorBrush x:Key="PurpleBrush"       Color="#8B5CF6"/>
+
+  <!-- Text — three levels of hierarchy -->
+  <SolidColorBrush x:Key="TextPrimaryBrush"  Color="#F1F5F9"/>
+  <SolidColorBrush x:Key="TextSecBrush"      Color="#64748B"/>
+  <SolidColorBrush x:Key="TextMutedBrush"    Color="#1E293B"/>
+
+  <!-- Borders — barely visible, structural only -->
+  <SolidColorBrush x:Key="BorderBrush"       Color="#1E293B"/>
+  <SolidColorBrush x:Key="BorderActiveBrush" Color="#2563EB"/>
+
+  <!-- Goal-specific colors -->
+  <SolidColorBrush x:Key="GoalWeightLoss"    Color="#EF4444"/>
+  <SolidColorBrush x:Key="GoalFatLoss"       Color="#F59E0B"/>
+  <SolidColorBrush x:Key="GoalMuscleGain"    Color="#2563EB"/>
+  <SolidColorBrush x:Key="GoalWeightGain"    Color="#10B981"/>
+  <SolidColorBrush x:Key="GoalMaintain"      Color="#8B5CF6"/>
+
+  <!-- Macro colors -->
+  <SolidColorBrush x:Key="ProteinBrush"      Color="#2563EB"/>
+  <SolidColorBrush x:Key="CarbsBrush"        Color="#F59E0B"/>
+  <SolidColorBrush x:Key="FatBrush"          Color="#10B981"/>
+
+</ResourceDictionary>

@@ -1,0 +1,89 @@
+<Page x:Class="FitTrack.UI.Views.Pages.WorkoutsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:FitTrack.UI.ViewModels"
+      Title="Workouts">
+    <Page.DataContext>
+        <vm:WorkoutsViewModel/>
+    </Page.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="32">
+            <Grid Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Workouts" Style="{StaticResource PageTitle}"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="+ Create Plan" Command="{Binding CreatePlanCommand}" Grid.Column="1" Padding="16,8"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,24,0">
+                    <TextBlock Text="Available Plans" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                    <ItemsControl ItemsSource="{Binding UserPlans}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource DataCard}" Margin="0,0,0,16">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding PlanName}" Style="{StaticResource CardTitle}"/>
+                                            <TextBlock Text="{Binding DurationWeeks, StringFormat={}{0} weeks}" Style="{StaticResource Caption}" Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                        <Button Style="{StaticResource GhostButton}" Content="Activate" 
+                                                Command="{Binding DataContext.ActivatePlanCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                                CommandParameter="{Binding}" Grid.Column="1" Padding="16,8"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <Border Style="{StaticResource DataCard}" Grid.Column="1" VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="Active Plan Details" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
+                        
+                        <!-- When No Active Plan -->
+                        <TextBlock Text="No active plan selected." Style="{StaticResource BodyText}" Foreground="{StaticResource TextSecBrush}"
+                                   Visibility="{Binding ActivePlan, Converter={StaticResource InverseBoolToVisConverter}}"/>
+                        
+                        <!-- When Active Plan Exists -->
+                        <StackPanel Visibility="{Binding ActivePlan, Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="{Binding ActivePlan.PlanName}" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource DMSans}" Foreground="{StaticResource BrandBrush}" Margin="0,0,0,16"/>
+                            
+                            <ItemsControl ItemsSource="{Binding ActivePlan.Exercises}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="0,8">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding ExerciseName}" Style="{StaticResource BodyText}" FontWeight="SemiBold"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                        <TextBlock Text="{Binding Sets, StringFormat={}{0} sets}" Style="{StaticResource Caption}"/>
+                                                        <TextBlock Text=" • " Style="{StaticResource Caption}"/>
+                                                        <TextBlock Text="{Binding Reps, StringFormat={}{0} reps}" Style="{StaticResource Caption}"/>
+                                                        <TextBlock Text=" • " Style="{StaticResource Caption}"/>
+                                                        <TextBlock Text="{Binding DayOfWeek, StringFormat=Day {0}}" Style="{StaticResource Caption}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
